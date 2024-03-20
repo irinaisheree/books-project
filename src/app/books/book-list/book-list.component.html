@@ -1,0 +1,22 @@
+<html lang="en">
+
+<body>
+    <header>
+        <h1>Welcome to Our Book Lovers Club</h1>
+    </header>
+    <main>
+        <div *ngFor="let book of books" class="book-container">
+            <div class="book">
+                <img src="{{book.imageUrl}}" alt="Book 1">
+                <h2 class="book-title">{{book.title}}</h2>
+                <a [routerLink]="['/books', book._id]">
+                    <button class="details-btn">Details</button>
+                </a>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Book Lovers Club. All rights reserved.</p>
+    </footer>
+</body>
+</html>

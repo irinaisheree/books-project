@@ -1,0 +1,22 @@
+<html lang="en">
+<body>
+    
+    <main>
+        <div *ngIf="book" class="book-details">
+            <img src="{{book.imageUrl}}" alt="Book 1">
+            <h2 class="book-title">{{book.title}}</h2>
+            <p class="author">{{book.author}}</p>
+            <p class="price">Price: ${{book.price}}</p>
+            <p class="description">{{book.description}}</p>
+            <button class="add-to-favorites-btn">Add to Favorites</button>
+
+          
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Book Lovers Club. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+
+
