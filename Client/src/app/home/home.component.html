@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+  <div class="container">
+    <h1 class="animated-text">Welcome to Our Book Lovers Club!
+      <div class="clock">Time: {{ time$ | async | date: "hh:mm:ss"}}</div>
+
+    </h1>
+    <button onclick="window.location.href='/books'" class="btn">Explore Books</button>
+    <button onclick="window.location.href='/add'" class="btn">Add a Book</button>
+  </div>
+</body>
+
+</html>

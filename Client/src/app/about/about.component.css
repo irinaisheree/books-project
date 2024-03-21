@@ -1,0 +1,80 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://inharmony.com/wp-content/uploads/2019/08/Woman-reading-in-hammock-1-1200x800.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+header {
+    background-color: rgba(255, 192, 203, 0.5); /* Pink with some transparency */
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    color: purple;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: purple;
+}
+
+main {
+    padding: 20px;
+    min-height: calc(100vh - 130px); /* Adjust based on header and footer height */
+    background-color: rgba(255, 255, 255, 0.7); /* White with some transparency */
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+h2 {
+    color: purple;
+}
+
+.team-member {
+    display: inline-block;
+    margin-right: 20px;
+    text-align: center;
+}
+
+.team-member h3 {
+    margin: 5px 0;
+    color: purple;
+}
+
+.team-member p {
+    margin: 5px 0;
+    color: mint;
+}
+
+footer {
+    background-color: rgba(255, 192, 203, 0.5); /* Pink with some transparency */
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+}
+
+footer p {
+    margin: 0;
+    color: purple;
+}

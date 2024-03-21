@@ -1,0 +1,14 @@
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <!-- <li><a href="/all-books">All Books</a></li> -->
+        <li><a href="/books">All Books</a></li>
+        <li><a href="/contacts">Contact</a></li>
+        <li><a href="/logout">Logout</a></li>
+        <div *ngIf="!isLoggedIn()"></div>
+        <li><a href="/auth/login">Login</a></li>
+        <li><a href="/auth/register">Register</a></li>
+      
+    </ul>
+</nav>

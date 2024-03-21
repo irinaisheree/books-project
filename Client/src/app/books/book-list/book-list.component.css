@@ -1,0 +1,70 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8edeb; /* Mint */
+}
+
+header {
+    background-color: #b88ea6; /* Purple */
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+main {
+    padding: 20px;
+}
+
+.book-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    
+}
+
+.book {
+    width: 200px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.book img {
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+.book-title {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.details-btn {
+    background-color: #f197bd; /* Pink */
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+.details-btn:hover {
+    background-color: #e64a87; /* Lighter Pink */
+}
+
+footer {
+    background-color: #b88ea6; /* Purple */
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+}
+
+footer p {
+    margin: 0;
+}
