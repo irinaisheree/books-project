@@ -35,11 +35,11 @@ export class AddComponent implements OnInit {
 this.addService.add(this.addBookForm.value.title, this.addBookForm.value.author, this.addBookForm.value.price,this.addBookForm.value.imageUrl, this.addBookForm.value.description).subscribe(
   (response) => {
     console.log(response);
-    console.log('User logged in successfully!', response.valueOf());
+    console.log('Book added!', response.valueOf());
     this.router.navigate(['/books']);
   },
   (error) => {
-    console.error('Error submitting user:', error);
+    console.error('Error submitting book:', error);
   }
 );
 }

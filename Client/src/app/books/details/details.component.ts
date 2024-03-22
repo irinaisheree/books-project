@@ -26,7 +26,7 @@ export class DetailsComponent implements OnInit {
         this.bookService.getOneBook(this.bookId).subscribe((book) => {
           // Assign the fetched book details to this.book
           this.book = book;
-          // Now you can safely access this.book here
+
           console.log(this.book);
         });
       } else {

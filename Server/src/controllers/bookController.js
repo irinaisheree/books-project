@@ -13,6 +13,10 @@ router.get('/books', async (req, res) => {
     }
 });
 
+router.get('/add', (req, res) => {
+    res.status(405).json({ error: 'GET method not allowed for this endpoint - register' });
+});
+
 
 
 router.get('/books/:bookId', async (req, res) => {
@@ -41,18 +45,6 @@ router.get('/add', async (req, res) => {
     }
 });
 
-
-// router.post('/add', async (req, res) => {
-//     console.log(req.body)
-//     try {
-//         const { title, author, price, imageUrl, description } = req.body;
-//         const book = await bookManager.add(title, author, price, imageUrl, description);
-//         res.json({ book });
-//     } catch (error) {
-//         console.error('Error adding book:', error);
-//         res.status(401).json({ error: 'invalid data' });
-//     }
-// });
 
 router.post('/add', async (req, res) => {
     console.log(req.body)

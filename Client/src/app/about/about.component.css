@@ -12,7 +12,7 @@ body {
 }
 
 header {
-    background-color: rgba(255, 192, 203, 0.5); /* Pink with some transparency */
+    background-color: rgba(255, 192, 203, 0.5); 
     padding: 20px;
     text-align: center;
 }
@@ -39,8 +39,8 @@ nav ul li a {
 
 main {
     padding: 20px;
-    min-height: calc(100vh - 130px); /* Adjust based on header and footer height */
-    background-color: rgba(255, 255, 255, 0.7); /* White with some transparency */
+    min-height: calc(100vh - 130px); 
+    background-color: rgba(255, 255, 255, 0.7); 
 }
 
 section {
@@ -68,7 +68,7 @@ h2 {
 }
 
 footer {
-    background-color: rgba(255, 192, 203, 0.5); /* Pink with some transparency */
+    background-color: rgba(255, 192, 203, 0.5); 
     text-align: center;
     padding: 10px;
     width: 100%;
