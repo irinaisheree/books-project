@@ -1,29 +1,23 @@
 <nav>
-    <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/books">All Books</a></li>
-      <li><a href="/contacts">Contact</a></li>
-      
-      <!-- Show these links only if the user is logged in -->
-      <li *ngIf="isLoggedIn$">
-        <a href="/profile">Profile</a>
-      </li>
-      <li *ngIf="!isLoggedIn$">
-        <a href="/auth/login">Login</a>
-      </li>
-      <li *ngIf="!isLoggedIn$">
-        <a href="/auth/register">Register</a>
-      </li>
-  
-      <!-- Add Book link -->
-      <li *ngIf="isLoggedIn$">
-        <a href="/add">Add Book</a>
-      </li>
-  
-      <!-- Logout link -->
-      <li *ngIf="isLoggedIn$">
-        <a href="/logout" (click)="logout()">Logout</a>
-      </li>
-    </ul>
-  </nav>
+  <ul>
+    <li><a routerLink="/" routerLinkActive="active">Home</a></li>
+    <li><a routerLink="/about" routerLinkActive="active">About</a></li>
+    <li><a routerLink="/books" routerLinkActive="active">All Books</a></li>
+    <li><a routerLink="/contacts" routerLinkActive="active">Contact</a></li>
+    <li *ngIf="(isLoggedIn$ | async) as isLoggedIn">
+      <a *ngIf="isLoggedIn" routerLink="/profile" routerLinkActive="active">Profile</a>
+    </li>
+    <li *ngIf="!(isLoggedIn$ | async)">
+      <a routerLink="/auth/login" routerLinkActive="active">Login</a>
+    </li>
+    <li *ngIf="!(isLoggedIn$ | async)">
+      <a routerLink="/auth/register" routerLinkActive="active">Register</a>
+    </li>
+    <li *ngIf="isLoggedIn$ | async">
+      <a routerLink="/add" routerLinkActive="active">Add Book</a>
+    </li>
+    <li *ngIf="isLoggedIn$ | async">
+      <a (click)="logout()" href="#">Logout</a>
+    </li>
+  </ul>
+</nav>

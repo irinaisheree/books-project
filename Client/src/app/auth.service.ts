@@ -67,7 +67,8 @@ export class AuthService {
 
   logout(): Observable<any> {
     // Clear token and userEmail from local storage
-    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('userEmail');
 
     // Update auth status to indicate the user is logged out
     this.updateAuthStatus(false);

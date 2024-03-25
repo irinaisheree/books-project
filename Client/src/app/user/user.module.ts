@@ -22,6 +22,11 @@ import { LogoutComponent } from './logout/logout.component';
     ReactiveFormsModule,
     FormsModule
   
+  ],
+  exports: [
+    LoginComponent,
+    RegisterComponent,
+    LogoutComponent
   ]
 })
 export class UserModule { }

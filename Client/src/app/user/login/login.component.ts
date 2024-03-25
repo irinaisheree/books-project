@@ -14,7 +14,8 @@ import { UserForAuth } from 'src/app/types/user';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   isLoggedIn$: Observable<boolean>;
-  errorMessage: string = ''; // Define errorMessage property
+  errorMessage: string = ''; 
+  showLoginMessage = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,6 +27,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.showLoginMessage = false;
+    }, 5000);
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]

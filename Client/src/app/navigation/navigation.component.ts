@@ -1,22 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css']
 })
-export class NavigationComponent{
+export class NavigationComponent implements OnInit {
+  isLoggedIn$!: Observable<boolean>;
 
-  isLoggedIn$: Observable<boolean>;
+  constructor(private authService: AuthService, private router: Router) {}
 
-  constructor(private authService: AuthService) {
+  ngOnInit(): void {
     this.isLoggedIn$ = this.authService.isLoggedIn$;
   }
 
   logout(): void {
-    this.authService.logout();
+    this.authService.logout().subscribe(
+      () => {
+        console.log('Logout successful');
+        // Redirect to home page or any other desired page after logout
+        this.router.navigate(['/']);
+      },
+      (error: any) => {
+        console.error('Error logging out:', error);
+        // Handle error if needed
+      }
+    );
   }
-  
 }
