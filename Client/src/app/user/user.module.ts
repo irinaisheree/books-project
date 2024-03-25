@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import {  FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LogoutComponent } from './logout/logout.component';
 
 
 
@@ -13,6 +14,7 @@ import {  FormsModule, ReactiveFormsModule } from '@angular/forms';
   
     LoginComponent,
     RegisterComponent,
+    LogoutComponent,
 
   ],
   imports: [

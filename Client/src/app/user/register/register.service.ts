@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from 'src/app/environments/environment';
 import { User } from 'src/app/types/user';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../auth.service';
 import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
@@ -16,10 +16,11 @@ export class RegisterService {
 
   registerUser(userData: any): Observable<any> {
     const { apiUrl } = environment;
-    console.log(userData)
+    console.log(userData);
     return this.http.post<User>(`${apiUrl}/auth/register`, userData).pipe(
-      tap(() => {
-        this.authService.updateAuthStatus(true);
+      catchError(error => {
+        console.error('HTTP POST request error:', error);
+        return of(error); // Emit the error and complete
       })
     );
   }

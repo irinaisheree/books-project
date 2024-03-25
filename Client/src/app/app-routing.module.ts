@@ -8,6 +8,7 @@ import { LoginComponent } from './user/login/login.component';
 import { DetailsComponent } from './books/details/details.component';
 import { RegisterComponent } from './user/register/register.component';
 import { AddComponent } from './books/add/add.component';
+import { LogoutComponent } from './user/logout/logout.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,7 +18,8 @@ export const routes: Routes = [
   { path: 'books/:bookId', component: DetailsComponent},
   { path: 'books', component: BookListComponent},
   {path: 'auth/register', component: RegisterComponent},
-  {path: "add", component: AddComponent}
+  {path: "add", component: AddComponent},
+  {path: "logout", component: LogoutComponent}
 ];
 
 @NgModule({

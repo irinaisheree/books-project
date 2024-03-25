@@ -32,7 +32,6 @@ exports.login = async (email, password) => {
     // Generate jwt token
     const payload = {
         _id: user._id,
-        username: user.username,
         email: user.email,
     };
 
