@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const bookManager = require("../managers/bookManager")
+const {isAuth} = require('../middlewares/authMiddleware')
 
 
 router.get('/books', async (req, res) => {
@@ -61,6 +62,42 @@ router.post('/add', async (req, res) => {
      res.redirect('/add')
     }
  })
+
+ router.get('/books/:bookId/edit', isAuth, async (req, res) => {
+    try {
+      const bookId = req.params.bookId;
+      // Here you can fetch the book data by bookId from your database
+      // For now, let's assume you have a book object
+      const book = {
+        _id: bookId,
+        imageUrl: 'https://example.com/image.jpg',
+        title: 'Sample Book Title',
+        author: 'Sample Author',
+        price: 19.99,
+        description: 'Sample book description.'
+      };
+      res.status(200).json(book);
+    } catch (error) {
+      console.error('Error fetching book:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+  
+  router.post('/books/:bookId/edit', isAuth, async (req, res) => {
+    const bookData = req.body;
+    try {
+      // Update the book data in your database using bookId and bookData
+      // For now, let's assume the book is updated successfully
+      const updatedBook = {
+        _id: req.params.bookId,
+        ...bookData
+      };
+      res.status(200).json(updatedBook);
+    } catch (error) {
+      console.error('Error updating book:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
  
 
 module.exports = router

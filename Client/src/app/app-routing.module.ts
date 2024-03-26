@@ -9,6 +9,7 @@ import { DetailsComponent } from './books/details/details.component';
 import { RegisterComponent } from './user/register/register.component';
 import { AddComponent } from './books/add/add.component';
 import { LogoutComponent } from './user/logout/logout.component';
+import { EditComponent } from './books/edit/edit.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,7 +20,8 @@ export const routes: Routes = [
   { path: 'books', component: BookListComponent},
   {path: 'auth/register', component: RegisterComponent},
   {path: "add", component: AddComponent},
-  {path: "logout", component: LogoutComponent}
+  {path: "logout", component: LogoutComponent},
+  {path: "books/:bookId/edit", component: EditComponent}
 ];
 
 @NgModule({

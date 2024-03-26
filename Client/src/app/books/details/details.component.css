@@ -39,7 +39,7 @@ main {
     font-weight: bold;
 }
 
-.add-to-favorites-btn {
+.btn {
     background-color: #f197bd; /* Pink */
     color: #fff;
     border: none;

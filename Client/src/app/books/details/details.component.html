@@ -8,7 +8,8 @@
             <p class="author">{{book.author}}</p>
             <p class="price">Price: ${{book.price}}</p>
             <p class="description">{{book.description}}</p>
-            <button class="add-to-favorites-btn">Add to Favorites</button>
+            <a *ngIf="(isLoggedIn$ | async)" [routerLink]="['/books', book._id, 'edit']" class="btn">Edit</a>
+            <button *ngIf="isLoggedIn$ | async" onclick="window.location.href='/delete'" class="btn">Delete</button>
 
           
         </div>

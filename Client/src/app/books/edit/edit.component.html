@@ -1,0 +1,28 @@
+<div class="edit-book-form" *ngIf="book">
+    <h2>Edit Book</h2>
+    <form [formGroup]="editBookForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="imageUrl">Photo:</label>
+        <input type="text" id="imageUrl" formControlName="imageUrl" placeholder="URL to Book Cover">
+      </div>
+      <div class="form-group">
+        <label for="title">Name:</label>
+        <input type="text" id="title" formControlName="title" placeholder="Book Name">
+      </div>
+      <div class="form-group">
+        <label for="author">Author:</label>
+        <input type="text" id="author" formControlName="author" placeholder="Author Name">
+      </div>
+      <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="number" id="price" formControlName="price" placeholder="Price">
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" formControlName="description" placeholder="Book Description"></textarea>
+      </div>
+      <div class="button-container">
+        <button type="submit" [disabled]="editBookForm.invalid">Save Changes</button>
+      </div>
+    </form>
+  </div>

@@ -6,3 +6,7 @@ exports.getOne = (bookId) => Book.findById(bookId)
 
 
 exports.create =  (bookData) => Book.create(bookData)
+
+exports.update = (bookId, bookData) => {
+    return Book.findByIdAndUpdate(bookId, bookData);
+  };

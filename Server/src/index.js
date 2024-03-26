@@ -3,6 +3,7 @@ const express = require("express")
 const mongoose = require("mongoose")
 const router = require('./controllers/bookController')
 const userRouter = require('./controllers/userController')
+const cors = require('cors')
 
 const bodyParser = require("body-parser")
 
@@ -10,20 +11,20 @@ const bodyParser = require("body-parser")
 
 const app = express()
 expressConfig(app)
-// app.use(cors());
+app.use(cors());
 
 app.use(bodyParser.json({extended: true }))
 
-app.use((req, res,next) => {
+// app.use((req, res,next) => {
 
     
-    res.header('Access-Control-Allow-Origin', 'http://localhost:4200'),
-    res.header('Access-Control-Allow-Methods', '*'),
-    res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+//     res.header('Access-Control-Allow-Origin', 'http://localhost:4200'),
+//     res.header('Access-Control-Allow-Methods', '*'),
+//     res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
 
 
-    next()
-})
+//     next()
+// })
 
 app.use(router)
 app.use('/auth', userRouter)
