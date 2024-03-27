@@ -5,15 +5,27 @@ import { AddComponent } from './add/add.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditComponent } from './edit/edit.component';
 import { RouterModule } from '@angular/router';
+import { BookListComponent } from './book-list/book-list.component';
+import { AppRoutingModule } from '../app-routing.module';
+
 
 @NgModule({
   declarations: [
+    BookListComponent,
     DetailsComponent,
-    AddComponent,
-    EditComponent
+    EditComponent,
+    AddComponent
   ],
   imports: [
-    CommonModule, ReactiveFormsModule, RouterModule
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule
+  ],
+  exports: [
+    BookListComponent,
+    DetailsComponent,
+    EditComponent,
+    AddComponent
   ]
 })
 export class BooksModule { }

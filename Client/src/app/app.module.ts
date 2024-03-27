@@ -1,7 +1,7 @@
 
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
@@ -17,6 +17,8 @@ import { ContactComponent } from './contact/contact.component';
 import { BooksModule } from './books/books.module';
 import { UserModule } from './user/user.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from './auth.service';
+import { TokenInterceptor } from './tokenInterceptor';
 
 
 
@@ -31,7 +33,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     AppComponent,
     NavigationComponent,
-    BookListComponent,
+    // BookListComponent,
     AboutComponent,
     HomeComponent,
     ContactComponent,
@@ -47,7 +49,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 
     
   ],
-  providers: [provideRouter(routes)],
+  providers: [AuthService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true, // This is important to allow multiple interceptors
+  }] ,
   bootstrap: [AppComponent]
 })
 export class AppModule { }

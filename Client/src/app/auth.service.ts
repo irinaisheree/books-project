@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { UserForAuth } from './types/user';
-import { environment } from 'src/app/environments/environment';
+import { environment } from './environments/environments.development';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -16,13 +16,17 @@ export class AuthService {
   isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
   userId$: Observable<string | null> = this.userIdSubject.asObservable();
   user$: Observable<UserForAuth | null> = this.userSubject.asObservable();
- 
 
   constructor(private httpClient: HttpClient) { }
 
   setUser(user: UserForAuth): void {
-    console.log(`setting user: ${JSON.stringify(user)}`);
+    console.log(`setting user: ${user.email}`);
     this.userSubject.next(user);
+  }
+
+  getUser(): Observable<UserForAuth | null> {
+    console.log('getting user:', this.userSubject.getValue()?.email);
+    return this.userSubject.asObservable();
   }
 
   updateAuthStatus(isLoggedIn: boolean): void {
@@ -48,10 +52,6 @@ export class AuthService {
   setUserId(userId: string | null): void {
     this.userIdSubject.next(userId);
     console.log('Setting user ID:', userId);
-  }
-
-  getUserId(): Observable<string | null> {
-    return this.userId$;
   }
 
   getUserIdFromToken(token: string): string | null {

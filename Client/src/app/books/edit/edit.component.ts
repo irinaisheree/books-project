@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EditService } from './edit.service';
 import { Book } from 'src/app/types/book';
 import { HttpHeaders } from '@angular/common/http';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-edit',
@@ -14,12 +15,14 @@ export class EditComponent implements OnInit {
 
   editBookForm!: FormGroup;
   book: Book | undefined;
+  currentUserEmail: string | null = null;
 
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private editService: EditService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +37,15 @@ export class EditComponent implements OnInit {
 
     const bookId = this.route.snapshot.params['bookId'] || '';
 
+    this.authService.getUser().subscribe(user => {
+      if (user) {
+        this.currentUserEmail = user.email;
+        this.loadBookData(bookId);
+      }
+    });
+  }
+
+  private loadBookData(bookId: string): void {
     const authToken = localStorage.getItem('token');
 
     if (!authToken) {
@@ -72,9 +84,9 @@ export class EditComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.editBookForm.valid && this.book) {
+    if (this.editBookForm.valid && this.book && this.currentUserEmail === this.book.creator.email) {
       const updatedBookData = this.editBookForm.value;
-      console.log(updatedBookData)
+      console.log(updatedBookData);
       this.editService.updateBook(this.book._id, updatedBookData).subscribe(
         (updatedBook: Book) => {
           console.log('Book updated:', updatedBook);

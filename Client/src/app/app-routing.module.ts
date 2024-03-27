@@ -10,6 +10,7 @@ import { RegisterComponent } from './user/register/register.component';
 import { AddComponent } from './books/add/add.component';
 import { LogoutComponent } from './user/logout/logout.component';
 import { EditComponent } from './books/edit/edit.component';
+import { AuthGuardService } from './authGuardService';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,7 +20,7 @@ export const routes: Routes = [
   { path: 'books/:bookId', component: DetailsComponent},
   { path: 'books', component: BookListComponent},
   {path: 'auth/register', component: RegisterComponent},
-  {path: "add", component: AddComponent},
+  {path: "add", component: AddComponent, canActivate:[AuthGuardService]},
   {path: "logout", component: LogoutComponent},
   {path: "books/:bookId/edit", component: EditComponent}
 ];
