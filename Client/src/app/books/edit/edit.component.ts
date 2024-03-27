@@ -74,6 +74,7 @@ export class EditComponent implements OnInit {
   onSubmit(): void {
     if (this.editBookForm.valid && this.book) {
       const updatedBookData = this.editBookForm.value;
+      console.log(updatedBookData)
       this.editService.updateBook(this.book._id, updatedBookData).subscribe(
         (updatedBook: Book) => {
           console.log('Book updated:', updatedBook);

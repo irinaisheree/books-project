@@ -1,6 +1,7 @@
 const jwt = require("../lib/jwt")
 const { SECRET } = require("../config/config")
 const User = require("../models/User")
+const bookManager = require("../managers/bookManager")
 
 
 exports.auth = async (req, res, next) => {
@@ -55,16 +56,18 @@ exports.isAuth = async (req, res, next) => {
 };
 
 
-// exports.isGuest = (req, res, next) => {
-//     if (req.user) {
-//        return res.redirect('/')
-//     }
 
-//     next()
-// }
 
-// exports.isOwner = async (req, res, next) => {
-//     const book = await bookManager.getOne()
+exports.isGuest = (req, res, next) => {
+    if (req.user) {
+       return res.redirect('/')
+    }
 
-//     next()
-// }
+    next()
+}
+
+exports.isOwner = async (req, res, next) => {
+    const book = await bookManager.getOne()
+
+    next()
+}

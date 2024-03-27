@@ -1,18 +1,20 @@
 const mongoose = require('mongoose')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const Book = require('./Book');
 
 
 const userSchema = new mongoose.Schema({
     
     email : {
         type: String,
-
     },
     password: {
-        type: String,
-   
-        
+        type: String,   
     },
+    createdBooks:[{
+        type: mongoose.Types.ObjectId,
+        ref: Book
+    }]
 });
 
 userSchema.pre('save', async function(){

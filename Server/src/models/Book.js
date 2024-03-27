@@ -24,14 +24,10 @@ const bookSchema = new mongoose.Schema({
         required: true,
         maxLength: [1000, 'Maximum characters exceeded - description cannot be longer than 1000 characters']
     },
-    // likes: [{
-    //     type: mongoose.Types.ObjectId,
-    //     ref: "Book"
-    // }],
-    // creator: {
-    //     type: mongoose.Types.ObjectId,
-    //     ref: "User"
-    // },
+    creator: {
+        type: mongoose.Types.ObjectId,
+        ref: "User"
+    },
 })
 
 

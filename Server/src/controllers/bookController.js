@@ -15,7 +15,7 @@ router.get('/books', async (req, res) => {
 });
 
 router.get('/add', (req, res) => {
-    res.status(405).json({ error: 'GET method not allowed for this endpoint - register' });
+    res.status(405).json({ error: 'GET method not allowed for this endpoint - add' });
 });
 
 
@@ -36,46 +36,27 @@ router.get('/books/:bookId', async (req, res) => {
     }
 });
 
-router.get('/add', async (req, res) => {
+
+router.post('/add', isAuth, async (req, res) => {
+    console.log(req.body);
+    const bookData = req.body;
+
     try {
-        const book = await bookManager.getAll();
-        console.log(book)
+        const newBook = await bookManager.create(bookData, req.user._id);
+        console.log(newBook);
+        res.json(newBook);
     } catch (error) {
-        console.error('Error fetching books:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error adding book:', error.message);
+        res.status(500).json({ error: 'Failed to add book' });
     }
 });
-
-
-router.post('/add', async (req, res) => {
-    console.log(req.body)
-    const book = {
-     ...req.body,
-  
-    }
- 
-    try{
-     await bookManager.create(book)
-     res.redirect('/')
-    }catch(err){
-     console.log(err.message)
-     res.redirect('/add')
-    }
- })
 
  router.get('/books/:bookId/edit', isAuth, async (req, res) => {
     try {
       const bookId = req.params.bookId;
       // Here you can fetch the book data by bookId from your database
       // For now, let's assume you have a book object
-      const book = {
-        _id: bookId,
-        imageUrl: 'https://example.com/image.jpg',
-        title: 'Sample Book Title',
-        author: 'Sample Author',
-        price: 19.99,
-        description: 'Sample book description.'
-      };
+      const book = await bookManager.getOneWithDetails(bookId)
       res.status(200).json(book);
     } catch (error) {
       console.error('Error fetching book:', error);

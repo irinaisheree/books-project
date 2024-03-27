@@ -29,6 +29,6 @@ export class EditService {
     // Adjust the URL and request method based on your backend API
     const { apiUrl } = environment;
     const url = `${apiUrl}/books/${bookId}/edit`; // Adjust the URL to your API endpoint
-    return this.http.put<Book>(url, updatedBookData); // Use PUT or PATCH based on your API
+    return this.http.post<Book>(url, updatedBookData); // Use PUT or PATCH based on your API
   }
 }

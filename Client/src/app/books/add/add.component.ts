@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AddService } from './add.service';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs';
+import { Book } from 'src/app/types/book';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-add',
@@ -11,47 +12,43 @@ import { finalize } from 'rxjs';
 })
 export class AddComponent implements OnInit {
 
-  addBookForm!: FormGroup;
+  addBookForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder,private addService: AddService, private router: Router ) { }
-
-  ngOnInit(): void {
+  constructor(
+    private formBuilder: FormBuilder, 
+    private addService: AddService, 
+    private router: Router,
+    private authService: AuthService
+  ) { 
     this.addBookForm = this.formBuilder.group({
       title: ['', Validators.required],
       author: ['', Validators.required],
       price: ['', [Validators.required, Validators.min(0)]],
-      imageUrl: [''],
+      imageUrl: ['', [Validators.required]],
       description: ['', Validators.required]
     });
   }
 
-  onSubmit(): void {
-    if (this.addBookForm.invalid) {
-      return;
-    }
-
-    // You can access the form values using this.addBookForm.value
-    console.log('Form Submitted!', this.addBookForm.value);
-    
-    this.addService.add(
-      this.addBookForm.value.title,
-      this.addBookForm.value.author,
-      this.addBookForm.value.price,
-      this.addBookForm.value.imageUrl,
-      this.addBookForm.value.description
-    ).pipe(
-      finalize(() => {
-        console.log('Add Book Observable completed');
-      })
-    ).subscribe(
-      (response) => {
-        console.log('Book added successfully:', response);
-        this.router.navigate(['/books']);
-      },
-      (error) => {
-        console.error('Error submitting book:', error);
+  ngOnInit(): void {
+    this.authService.user$.subscribe({
+      next:(user) => {
+        console.log('User from AuthService:', user)
       }
-    );
-    // Here you can add the logic to send the form data to your backend or handle it as needed
+    })
+  }
+
+  onSubmit(): void {
+    if (this.addBookForm.valid) {
+      this.addService.add(this.addBookForm.value).subscribe(
+        (addedBook: Book) =>{
+          console.log('Book submitted successfully:', addedBook );
+          // Navigate to the book details page for the newly added book
+          this.router.navigate(['/books', addedBook._id]);
+        },
+        (error) => {
+          console.error('Error adding book:', error);
+        }
+      );
+    }
   }
 }

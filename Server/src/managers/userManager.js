@@ -6,13 +6,13 @@ const { SECRET } = require('../config/config');
 exports.register = async (userData) => {
 
 
-    const email = await User.findOne({email: userData.email}) 
-    if(email){
-     throw new Error("Email already exists")
-    }
- 
-    return User.create(userData)
- };
+   const email = await User.findOne({email: userData.email}) 
+   if(email){
+    throw new Error("Email already exists")
+   }
+
+   return User.create(userData)
+};
 
 exports.login = async (email, password) => {
     // Get user from db
@@ -35,9 +35,10 @@ exports.login = async (email, password) => {
         email: user.email,
     };
 
-    const token = await jwt.sign(payload, SECRET, { expiresIn: '20h' });
+    const token = await jwt.sign(payload, SECRET, { expiresIn: '24h' });
 
     // return token
     return token;
 }
-exports.getUsers = () => User.find()
+
+exports.getOneUser = (userId) => User.findById(userId)

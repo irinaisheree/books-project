@@ -16,6 +16,7 @@ export class AuthService {
   isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
   userId$: Observable<string | null> = this.userIdSubject.asObservable();
   user$: Observable<UserForAuth | null> = this.userSubject.asObservable();
+ 
 
   constructor(private httpClient: HttpClient) { }
 
@@ -47,6 +48,10 @@ export class AuthService {
   setUserId(userId: string | null): void {
     this.userIdSubject.next(userId);
     console.log('Setting user ID:', userId);
+  }
+
+  getUserId(): Observable<string | null> {
+    return this.userId$;
   }
 
   getUserIdFromToken(token: string): string | null {

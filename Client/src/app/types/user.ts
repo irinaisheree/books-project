@@ -5,6 +5,8 @@ export interface User{
     _id: string;
     email: string;
     password: string;
+    books?: Book[];
+    token: string
 
 }
 
