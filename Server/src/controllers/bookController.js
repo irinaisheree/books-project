@@ -1,6 +1,7 @@
 const router = require("express").Router()
 const bookManager = require("../managers/bookManager")
-const {isAuth, isOwner} = require('../middlewares/authMiddleware')
+const {isAuth, isOwner} = require('../middlewares/authMiddleware');
+const Book = require("../models/Book");
 
 
 router.get('/books', async (req, res) => {
@@ -84,5 +85,23 @@ router.get('/books/:bookId/edit', isAuth, async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
+
+  
+  router.delete('/books/:bookId/delete', async (req, res) => {
+    try {
+      const bookId = req.params.bookId; // Corrected parameter name
+      // Check if the book exists
+      const book = await Book.findById(bookId);
+      if (!book) {
+        return res.status(404).json({ error: 'Book not found' });
+      }
+      await Book.findByIdAndDelete(bookId);
+      return res.status(204).send(); // No content
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Server error' });
+    }
+  });
+
 
 module.exports = router

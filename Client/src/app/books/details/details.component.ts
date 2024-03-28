@@ -6,6 +6,8 @@ import { Observable, Subject, of } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
 import { takeUntil, switchMap, tap, map, filter } from 'rxjs/operators';
 import { UserForAuth } from 'src/app/types/user';
+import { DeleteBookService } from '../delete.service';
+
 
 @Component({
   selector: 'app-details',
@@ -22,7 +24,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private bookService: DetailsServiceService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private deleteService: DeleteBookService
   ) {
     this.isLoggedIn$ = this.authService.isLoggedIn$;
     this.isOwner$ = undefined; 
@@ -80,13 +83,23 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   onDelete(): void {
-    const confirmDelete = confirm("Are you sure you want to delete this book?");
-    if (confirmDelete && this.book) {
-      this.bookService.deleteBook(this.book._id).subscribe(() => {
-        this.router.navigate(['/books']);
-      }, error => {
-        console.error('Error deleting book:', error);
-      });
+    const confirmDelete = confirm("Are you sure you want to delete this painting?");
+    if (confirmDelete && this.book && this.book._id) {
+      this.deleteService.deleteBook(this.book._id).subscribe(
+        () => {
+          console.log('Book deleted successfully');
+          // Redirect to books list or any other desired route
+          this.router.navigate(['/books']);
+        },
+        (error) => {
+          console.error('Error deleting book:', error);
+          // Handle error if needed
+        }
+      );
+    } else {
+      console.error('Book ID is undefined or null');
+      // Handle the case when book or book._id is undefined
     }
   }
+  
 }
