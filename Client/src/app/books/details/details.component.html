@@ -1,20 +1,22 @@
 <main>
   <div *ngIf="book" class="book-details">
-    <img src="{{book.imageUrl}}" alt="Book 1" class="book-image">
-    <h2 class="book-title">{{book.title}}</h2>
-    <p class="author">{{book.author}}</p>
-    <p class="price">Price: ${{book.price}}</p>
-    <p class="description">{{book.description}}</p>
+    <img src="{{book?.imageUrl}}" alt="Book 1" class="book-image">
+    <h2 class="book-title">{{book?.title}}</h2>
+    <p class="author">{{book?.author}}</p>
+    <p class="price">Price: ${{book?.price}}</p>
+    <p class="description">{{book?.description}}</p>
     
     <!-- Edit button -->
-    <a *ngIf="(isOwner$ | async)" [routerLink]="['/books', book._id, 'edit']" class="btn">Edit</a>
+    <a *ngIf="(isOwner$ | async)" [routerLink]="['/books', book?._id, 'edit']" class="btn">Edit</a>
     
     <!-- Delete button -->
     <button *ngIf="(isOwner$ | async) && (isLoggedIn$ | async)" (click)="onDelete()" class="btn">Delete</button>
     
-    <div *ngIf="!(isOwner$ | async) && (isLoggedIn$ | async)" class="unauthorized-message">
-      You are not the owner of this book.
-    </div>
+    <!-- Like button -->
+    <button *ngIf="!(isOwner$ | async) && (isLoggedIn$ | async)" (click)="onLike()" class="btn" [disabled]="(bookIsLiked$ | async)">
+      {{ isBookLiked ? 'LIKED' : 'LIKE' }} <!-- Update the button text based on liked state -->
+      <span *ngIf="book && book.likes && book.likes > 0"> ({{ book.likes }})</span>
+    </button>
   </div>
 </main>
 <footer>

@@ -1,42 +1,53 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const Book = require('./Book');
 
-
 const userSchema = new mongoose.Schema({
-    
-    email : {
+    email: {
         type: String,
     },
     password: {
-        type: String,   
+        type: String,
     },
-    createdBooks:[{
+    createdBooks: [{
         type: mongoose.Types.ObjectId,
-        ref: Book
-    }]
+        ref: Book,
+    }],
+    likedBooks: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: Book,
+    }],
 });
 
-userSchema.pre('save', async function(){
-    const hash = await bcrypt.hash(this.password, 12)
-    this.password = hash;
- });
- 
- userSchema.virtual('repeatPassword')
-     .get(function() {
-       return this._repeatPassword;
-     })
-     .set(function(value) {
-         this._repeatPassword = value;
-     });
- 
- userSchema.pre('validate', function(next) {
-     if (this.password !== this._repeatPassword) {
-         this.invalidate('repeatPassword', 'The passwords should be matching.');
-     }
-     next();
- });
+// Hash password before saving
+userSchema.pre('save', async function (next) {
+    if (this.isModified('password')) {
+        const hash = await bcrypt.hash(this.password, 12);
+        this.password = hash;
+    }
+    next();
+});
 
-const User = mongoose.model('User', userSchema)
+// Virtual for password confirmation during registration
+userSchema.virtual('repeatPassword')
+    .get(function () {
+        return this._repeatPassword;
+    })
+    .set(function (value) {
+        this._repeatPassword = value;
+    });
 
-module.exports = User
+// Validate repeatPassword only during registration
+userSchema.pre('validate', function (next) {
+    if (this.isNew && !this._repeatPassword) {
+        this.invalidate('repeatPassword', 'Password confirmation is required.');
+    }
+    if (this.isNew && this.password !== this._repeatPassword) {
+        this.invalidate('repeatPassword', 'The passwords should be matching.');
+    }
+    next();
+});
+
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;

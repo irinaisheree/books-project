@@ -17,4 +17,5 @@ export interface UserForAuth extends User {
     password: string;
     token: string;
     books?: Book[]
+    liked?: Book[]
   }

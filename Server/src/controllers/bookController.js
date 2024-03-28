@@ -2,6 +2,7 @@ const router = require("express").Router()
 const bookManager = require("../managers/bookManager")
 const {isAuth, isOwner} = require('../middlewares/authMiddleware');
 const Book = require("../models/Book");
+const User = require('../models/User')
 
 
 router.get('/books', async (req, res) => {
@@ -86,7 +87,7 @@ router.get('/books/:bookId/edit', isAuth, async (req, res) => {
     }
   });
 
-  
+
   router.delete('/books/:bookId/delete', async (req, res) => {
     try {
       const bookId = req.params.bookId; // Corrected parameter name
@@ -102,6 +103,40 @@ router.get('/books/:bookId/edit', isAuth, async (req, res) => {
       return res.status(500).json({ error: 'Server error' });
     }
   });
+ 
 
-
+  router.post('/books/:bookId/like', isAuth, async (req, res) => {
+    const { bookId } = req.params;
+    
+    // Check if user ID is available in the request
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+    
+    const { _id: userId } = req.user;
+    
+    try {
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+    
+      if (user.likedBooks.includes(bookId)) {
+        return res.status(400).json({ error: 'Book already liked' });
+      }
+    
+      user.likedBooks.push(bookId);
+      await user.save();
+    
+      console.log('Book liked successfully');
+      console.log('Updated user:', user); // Log the updated user
+    
+      res.status(200).json({ message: 'Book liked successfully', user });
+    } catch (error) {
+      console.error('Error liking book:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+});
+  
+  
 module.exports = router

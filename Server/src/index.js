@@ -27,6 +27,7 @@ app.use(bodyParser.json({extended: true }))
 // })
 
 app.use(router)
+
 app.use('/auth', userRouter)
 mongoose.connect("mongodb://127.0.0.1:27017/booksProject").then(() => {console.log("DB connected succesfully.");
 app.listen(3000, () => 

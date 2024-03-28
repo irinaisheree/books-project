@@ -19,6 +19,7 @@ import { UserModule } from './user/user.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './auth.service';
 import { TokenInterceptor } from './tokenInterceptor';
+import { LikeService } from './books/details/like.service';
 
 
 
@@ -53,7 +54,7 @@ import { TokenInterceptor } from './tokenInterceptor';
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptor,
     multi: true, // This is important to allow multiple interceptors
-  }] ,
+  }, LikeService] ,
   bootstrap: [AppComponent]
 })
 export class AppModule { }

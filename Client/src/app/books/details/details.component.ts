@@ -4,10 +4,9 @@ import { DetailsServiceService } from './details-service.service';
 import { Book } from 'src/app/types/book';
 import { Observable, Subject, of } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
-import { takeUntil, switchMap, tap, map, filter } from 'rxjs/operators';
+import { takeUntil, switchMap, map } from 'rxjs/operators';
 import { UserForAuth } from 'src/app/types/user';
-import { DeleteBookService } from '../delete.service';
-
+import { LikeService } from './like.service';
 
 @Component({
   selector: 'app-details',
@@ -17,18 +16,20 @@ import { DeleteBookService } from '../delete.service';
 export class DetailsComponent implements OnInit, OnDestroy {
   book: Book | undefined;
   isLoggedIn$: Observable<boolean>;
-  isOwner$: Observable<boolean> | undefined
+  isOwner$: Observable<boolean> | undefined;
   private destroy$ = new Subject<void>();
+  bookIsLiked$: Observable<boolean> = of(false);
+  isBookLiked: boolean = false; // Track liked state separately
 
   constructor(
     private route: ActivatedRoute,
     private bookService: DetailsServiceService,
     private authService: AuthService,
     private router: Router,
-    private deleteService: DeleteBookService
+    private likeService: LikeService
   ) {
     this.isLoggedIn$ = this.authService.isLoggedIn$;
-    this.isOwner$ = undefined; 
+    this.isOwner$ = undefined;
   }
 
   ngOnInit(): void {
@@ -41,11 +42,23 @@ export class DetailsComponent implements OnInit, OnDestroy {
           throw new Error('Book ID parameter is missing');
         }
       }),
-      takeUntil(this.destroy$)
-    ).subscribe(
-      (book: Book) => {
+      switchMap((book: Book) => {
         this.book = book;
         this.isOwner$ = this.isOwnerCheck();
+        
+        // Fetch initial liked state of the book
+        return of(this.likeService.isBookLiked(this.book?._id || '')).pipe(
+          map((isLiked: boolean) => {
+            this.isBookLiked = isLiked; // Set the liked state
+            this.bookIsLiked$ = of(isLiked);
+            return isLiked;
+          })
+        );
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe(
+      (isLiked: boolean) => {
+        // This subscription is optional depending on your use case
       },
       error => {
         console.error('Error fetching book:', error);
@@ -61,20 +74,18 @@ export class DetailsComponent implements OnInit, OnDestroy {
   isOwnerCheck(): Observable<boolean> {
     return this.authService.getUser().pipe(
       takeUntil(this.destroy$),
-      filter((user): user is UserForAuth => !!user), // Filter out null or undefined user
-      switchMap((user: UserForAuth) => {
+      switchMap((user): Observable<boolean> => {
         if (!this.book || !this.book.creator || !user) {
           console.log('Book, Creator, or User not available');
           return of(false);
         }
-  
-        console.log(this.book.creator)
-        const creatorId = this.book.creator.toString(); // Optional chaining operator added here
+
+        const creatorId = this.book.creator?.toString();
         if (!creatorId) {
           console.log('Creator ID not available');
           return of(false);
         }
-  
+
         const isOwner = user._id === creatorId;
         console.log('Is Owner:', isOwner);
         return of(isOwner);
@@ -85,21 +96,31 @@ export class DetailsComponent implements OnInit, OnDestroy {
   onDelete(): void {
     const confirmDelete = confirm("Are you sure you want to delete this painting?");
     if (confirmDelete && this.book && this.book._id) {
-      this.deleteService.deleteBook(this.book._id).subscribe(
+      this.bookService.deleteBook(this.book._id).subscribe(
         () => {
           console.log('Book deleted successfully');
-          // Redirect to books list or any other desired route
           this.router.navigate(['/books']);
         },
         (error) => {
           console.error('Error deleting book:', error);
-          // Handle error if needed
         }
       );
     } else {
       console.error('Book ID is undefined or null');
-      // Handle the case when book or book._id is undefined
     }
   }
+
+  onLike(): void {
+    if (this.book && this.book._id) {
+      this.likeService.likeBook(this.book._id).subscribe(() => {
+        console.log('Book liked successfully');
+        this.isBookLiked = true; // Update liked state
+      }, error => {
+        console.error('Error liking book:', error);
+      });
+    }
+  }
+  
+
   
 }
