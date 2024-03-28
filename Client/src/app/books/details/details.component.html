@@ -1,23 +1,22 @@
-<html lang="en">
-<body>
+<main>
+  <div *ngIf="book" class="book-details">
+    <img src="{{book.imageUrl}}" alt="Book 1">
+    <h2 class="book-title">{{book.title}}</h2>
+    <p class="author">{{book.author}}</p>
+    <p class="price">Price: ${{book.price}}</p>
+    <p class="description">{{book.description}}</p>
     
-    <main>
-        <div *ngIf="book" class="book-details">
-            <img src="{{book.imageUrl}}" alt="Book 1">
-            <h2 class="book-title">{{book.title}}</h2>
-            <p class="author">{{book.author}}</p>
-            <p class="price">Price: ${{book.price}}</p>
-            <p class="description">{{book.description}}</p>
-            <a *ngIf="(isLoggedIn$ | async)" [routerLink]="['/books', book._id, 'edit']" class="btn">Edit</a>
-            <button *ngIf="isLoggedIn$ | async" onclick="window.location.href='/delete'" class="btn">Delete</button>
-
-          
-        </div>
-    </main>
-    <footer>
-        <p>&copy; 2024 Book Lovers Club. All rights reserved.</p>
-    </footer>
-</body>
-</html>
-
-
+    <!-- Edit button -->
+    <a *ngIf="(isOwner$ | async)" [routerLink]="['/books', book._id, 'edit']" class="btn">Edit</a>
+    
+    <!-- Delete button -->
+    <button *ngIf="(isOwner$ | async) && (isLoggedIn$ | async)" (click)="onDelete()" class="btn">Delete</button>
+    
+    <div *ngIf="!(isOwner$ | async) && (isLoggedIn$ | async)" class="unauthorized-message">
+      You are not the owner of this book.
+    </div>
+  </div>
+</main>
+<footer>
+  <p>&copy; 2024 Book Lovers Club. All rights reserved.</p>
+</footer>

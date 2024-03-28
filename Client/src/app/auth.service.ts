@@ -22,12 +22,20 @@ export class AuthService {
   setUser(user: UserForAuth): void {
     console.log(`setting user: ${user.email}`);
     this.userSubject.next(user);
+    this.isLoggedInSubject.next(true); // Set isLoggedIn to true when user is set
   }
 
   getUser(): Observable<UserForAuth | null> {
     console.log('getting user:', this.userSubject.getValue()?.email);
     return this.userSubject.asObservable();
   }
+
+  
+  // setIsOwner(isOwner: boolean): void {
+  //   this.isOwnerSubject.next(isOwner);
+  // }
+  
+
 
   updateAuthStatus(isLoggedIn: boolean): void {
     console.log('Updating auth status:', isLoggedIn);

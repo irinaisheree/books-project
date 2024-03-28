@@ -32,4 +32,11 @@ export class DetailsServiceService implements OnDestroy{
         takeUntil(this.unsubscribe$)
       );
   }
+
+  deleteBook(id: string): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/books/${id}/delete`)
+      .pipe(
+        takeUntil(this.unsubscribe$)
+      );
+  }
 }
