@@ -18,6 +18,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   isOwner$: Observable<boolean> | undefined;
   private destroy$ = new Subject<void>();
   bookIsLiked$: Observable<boolean> = of(false);
+  userId: string = ''; // Current user's ID
 
   constructor(
     private route: ActivatedRoute,
@@ -31,6 +32,14 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.authService.getUser().pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(user => {
+      if (user) {
+        this.userId = user._id;
+      }
+    });
+
     this.route.paramMap.pipe(
       switchMap(params => {
         const bookIdParam = params.get('bookId');
@@ -43,9 +52,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
       switchMap((book: Book) => {
         this.book = book;
         this.isOwner$ = this.isOwnerCheck();
-        
-        // Fetch initial liked state of the book
-        this.bookIsLiked$ = of(this.likeService.isBookLiked(this.book?._id || ''));
+
+        // Fetch initial liked state of the book for the current user
+        this.bookIsLiked$ = this.likeService.isBookLikedByUser(this.userId, this.book?._id || '');
+
         return this.bookIsLiked$;
       }),
       takeUntil(this.destroy$)
@@ -104,9 +114,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   onLike(): void {
-    if (this.book && this.book._id) {
-      this.likeService.toggleLike(this.book._id);
-      this.bookIsLiked$ = of(this.likeService.isBookLiked(this.book?._id || ''));
+    if (this.book && this.book._id && this.userId) {
+      this.likeService.toggleLike(this.userId, this.book._id);
+      this.bookIsLiked$ = this.likeService.isBookLikedByUser(this.userId, this.book?._id || '');
     }
   }
 }

@@ -137,6 +137,31 @@ router.get('/books/:bookId/edit', isAuth, async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
 });
+
+router.post('/:userId/liked/:bookId', isAuth, async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const bookId = req.params.bookId;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Assuming 'likedBooks' is an array field in your User model
+    if (!user.likedBooks.includes(bookId)) {
+      user.likedBooks.push(bookId);
+      await user.save();
+      res.status(200).json({ message: 'Book liked successfully' });
+    } else {
+      res.status(400).json({ message: 'Book already liked by the user' });
+    }
+  } catch (error) {
+    console.error('Error liking book:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
   
   
 module.exports = router

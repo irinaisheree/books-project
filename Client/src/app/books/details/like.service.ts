@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from 'src/app/environments/environment';
 
 @Injectable({
@@ -33,25 +33,31 @@ export class LikeService {
     return this.likedBooks.has(bookId);
   }
 
-  likeBook(bookId: string): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/books/${bookId}/like`, null);
+  likeBook(userId: string, bookId: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${userId}/liked/${bookId}`, null);
   }
 
-  unlikeBook(bookId: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/books/${bookId}/like`);
+  unlikeBook(userId: string, bookId: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${userId}/liked/${bookId}`);
   }
 
-  toggleLike(bookId: string): void {
+  toggleLike(userId: string, bookId: string): void {
     if (this.likedBooks.has(bookId)) {
-      this.unlikeBook(bookId).subscribe(() => {
+      this.unlikeBook(userId, bookId).subscribe(() => {
         this.likedBooks.delete(bookId);
         this.saveLikedBooks();
       });
     } else {
-      this.likeBook(bookId).subscribe(() => {
+      this.likeBook(userId, bookId).subscribe(() => {
         this.likedBooks.add(bookId);
         this.saveLikedBooks();
       });
     }
+  }
+
+  isBookLikedByUser(userId: string, bookId: string): Observable<boolean> {
+    // Implement the logic to check if the book is liked by the user
+    // For now, returning a dummy observable, replace with actual API call
+    return of(this.likedBooks.has(bookId));
   }
 }
