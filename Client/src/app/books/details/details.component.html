@@ -14,7 +14,8 @@
     
     <!-- Like button -->
     <button *ngIf="!(isOwner$ | async) && (isLoggedIn$ | async)" (click)="onLike()" class="btn" [disabled]="(bookIsLiked$ | async)">
-      {{ isBookLiked ? 'LIKED' : 'LIKE' }} <!-- Update the button text based on liked state -->
+      <ng-container *ngIf="!(bookIsLiked$ | async); else likedText">LIKE</ng-container>
+      <ng-template #likedText>LIKED</ng-template>
       <span *ngIf="book && book.likes && book.likes > 0"> ({{ book.likes }})</span>
     </button>
   </div>

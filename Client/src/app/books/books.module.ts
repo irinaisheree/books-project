@@ -7,6 +7,7 @@ import { EditComponent } from './edit/edit.component';
 import { RouterModule } from '@angular/router';
 import { BookListComponent } from './book-list/book-list.component';
 import { AppRoutingModule } from '../app-routing.module';
+import { DetailsServiceService } from './details/details-service.service';
 
 
 @NgModule({
@@ -26,6 +27,9 @@ import { AppRoutingModule } from '../app-routing.module';
     DetailsComponent,
     EditComponent,
     AddComponent
+  ],
+  providers:[
+    DetailsServiceService
   ]
 })
 export class BooksModule { }

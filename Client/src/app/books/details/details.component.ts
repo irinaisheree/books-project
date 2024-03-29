@@ -4,8 +4,7 @@ import { DetailsServiceService } from './details-service.service';
 import { Book } from 'src/app/types/book';
 import { Observable, Subject, of } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
-import { takeUntil, switchMap, map } from 'rxjs/operators';
-import { UserForAuth } from 'src/app/types/user';
+import { takeUntil, switchMap } from 'rxjs/operators';
 import { LikeService } from './like.service';
 
 @Component({
@@ -19,7 +18,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
   isOwner$: Observable<boolean> | undefined;
   private destroy$ = new Subject<void>();
   bookIsLiked$: Observable<boolean> = of(false);
-  isBookLiked: boolean = false; // Track liked state separately
 
   constructor(
     private route: ActivatedRoute,
@@ -47,13 +45,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
         this.isOwner$ = this.isOwnerCheck();
         
         // Fetch initial liked state of the book
-        return of(this.likeService.isBookLiked(this.book?._id || '')).pipe(
-          map((isLiked: boolean) => {
-            this.isBookLiked = isLiked; // Set the liked state
-            this.bookIsLiked$ = of(isLiked);
-            return isLiked;
-          })
-        );
+        this.bookIsLiked$ = of(this.likeService.isBookLiked(this.book?._id || ''));
+        return this.bookIsLiked$;
       }),
       takeUntil(this.destroy$)
     ).subscribe(
@@ -112,15 +105,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   onLike(): void {
     if (this.book && this.book._id) {
-      this.likeService.likeBook(this.book._id).subscribe(() => {
-        console.log('Book liked successfully');
-        this.isBookLiked = true; // Update liked state
-      }, error => {
-        console.error('Error liking book:', error);
-      });
+      this.likeService.toggleLike(this.book._id);
+      this.bookIsLiked$ = of(this.likeService.isBookLiked(this.book?._id || ''));
     }
   }
-  
-
-  
 }
