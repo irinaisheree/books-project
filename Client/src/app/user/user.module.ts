@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import {  FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LogoutComponent } from './logout/logout.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -15,6 +16,7 @@ import { LogoutComponent } from './logout/logout.component';
     LoginComponent,
     RegisterComponent,
     LogoutComponent,
+    ProfileComponent,
 
   ],
   imports: [
@@ -26,7 +28,8 @@ import { LogoutComponent } from './logout/logout.component';
   exports: [
     LoginComponent,
     RegisterComponent,
-    LogoutComponent
+    LogoutComponent,
+    ProfileComponent
   ]
 })
 export class UserModule { }

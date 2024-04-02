@@ -73,13 +73,17 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['']);
           } else {
             console.error('Error: Unable to extract user ID from token');
+            this.errorMessage = 'Invalid credentials'; // Set errorMessage for invalid credentials
           }
         },
         (error) => {
-          console.error('Error submitting user. Please try again', error);
-          this.errorMessage = 'Error submitting user: ' + error.message; // Set errorMessage
+          console.error('Error logging user:', error);
+          if (error.error && error.error === 'Invalid email or password') {
+            this.errorMessage = 'Invalid email or password';
+          } else {
+            this.errorMessage = 'An error occurred. Please try again.';
+          }
         }
       );
   }
-  
 }

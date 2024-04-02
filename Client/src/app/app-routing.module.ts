@@ -11,19 +11,21 @@ import { AddComponent } from './books/add/add.component';
 import { LogoutComponent } from './user/logout/logout.component';
 import { EditComponent } from './books/edit/edit.component';
 import { AuthGuardService } from './authGuardService';
+import { ProfileComponent } from './user/profile/profile.component';
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent },
-    { path: 'about', component: AboutComponent },
-    { path: 'contacts', component: ContactComponent},
-    { path: 'auth/login', component: LoginComponent},
-    { path: 'books/:bookId', component: DetailsComponent},
-    { path: 'books', component: BookListComponent},
-    { path: 'auth/register', component: RegisterComponent},
-    { path: 'add', component: AddComponent, canActivate: [AuthGuardService] },
-    { path: 'logout', component: LogoutComponent },
-    { path: 'books/:bookId/edit', component: EditComponent },
-    { path: '', redirectTo: 'books', pathMatch: 'full' }
+  { path: '', component: HomeComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'contacts', component: ContactComponent},
+  { path: 'auth/login', component: LoginComponent},
+  { path: 'books/:bookId', component: DetailsComponent},
+  { path: 'books', component: BookListComponent},
+  { path: 'auth/register', component: RegisterComponent},
+  { path: 'add', component: AddComponent, canActivate: [AuthGuardService] },
+  { path: 'logout', component: LogoutComponent },
+  { path: 'books/:bookId/edit', component: EditComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
+  { path: '**', redirectTo: '/books', pathMatch: 'full' } // Wildcard route
   ];
   
 

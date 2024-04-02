@@ -42,4 +42,6 @@ router.get('/logout', isAuth, (req, res) => {
 
 router.post('/:bookId/like', isAuth, userManager.likeBook);
 
+router.get('/profile', userManager.getUserProfile);
+
 module.exports = router;
