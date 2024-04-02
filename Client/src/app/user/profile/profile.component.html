@@ -1,0 +1,33 @@
+<div *ngIf="user" class="container">
+  <h1>Profile</h1>
+  <div>
+    <p><strong>User ID:</strong> {{ user._id }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <h2>Liked Books:</h2>
+    <ul>
+      <li *ngFor="let book of likedBooks">
+        <div class="book-item">
+          <h3>{{ book.title }}</h3>
+          <p><strong>Author:</strong> {{ book.author }}</p>
+          <p><strong>Genre:</strong> {{ book.genre }}</p>
+          <!-- Add other book properties as needed -->
+        </div>
+      </li>
+    </ul>
+    <h2>Added Books:</h2>
+    <ul>
+      <li *ngFor="let book of createdBooks">
+        <div class="book-item">
+          <h3>{{ book.title }}</h3>
+          <p><strong>Author:</strong> {{ book.author }}</p>
+          <p><strong>Genre:</strong> {{ book.genre }}</p>
+          <!-- Add other book properties as needed -->
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="!user" class="container">
+  <p>Loading user profile...</p>
+</div>

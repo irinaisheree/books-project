@@ -1,4 +1,4 @@
-const router = require("express").Router();
+const userRouter = require("express").Router();
 const { getErrorMessage } = require('../utils/errorUtils');
 const userManager = require('../managers/userManager');
 const { isGuest, isAuth } = require('../middlewares/authMiddleware');
@@ -6,11 +6,11 @@ const User = require('../models/User');
 const bookManager = require('../managers/bookManager');
 const Book = require('../models/Book'); // Add this line
 
-router.get('/register', (req, res) => {
+userRouter.get('/register', (req, res) => {
     res.status(405).json({ error: 'GET method not allowed for this endpoint - register' });
 });
 
-router.post('/register', isGuest, async (req, res) => {
+userRouter.post('/register', isGuest, async (req, res) => {
     try {
         const user = await userManager.register(req.body);
         res.json(user);
@@ -20,11 +20,11 @@ router.post('/register', isGuest, async (req, res) => {
     }
 });
 
-router.get('/login', isGuest, (req, res) => {
+userRouter.get('/login', isGuest, (req, res) => {
     res.status(405).json({ error: 'GET method not allowed for this endpoint - login' });
 });
 
-router.post('/login', isGuest, async (req, res) => {
+userRouter.post('/login', isGuest, async (req, res) => {
     try {
         const { email, password } = req.body;
         console.log(req.body);
@@ -36,12 +36,30 @@ router.post('/login', isGuest, async (req, res) => {
     }
 });
 
-router.get('/logout', isAuth, (req, res) => {
+userRouter.get('/logout', isAuth, (req, res) => {
     res.status(200).clearCookie('token').send();
 });
 
-router.post('/:bookId/like', isAuth, userManager.likeBook);
 
-router.get('/profile', userManager.getUserProfile);
 
-module.exports = router;
+// userRouter.get('/profile', userManager.getUserProfile);
+// userRouter.get('/:userId/profile', userManager.getUserProfile)
+userRouter.get('/:userId/profile', async(req, res) => {
+    const userId = req.params.userId
+    console.log(userId)
+
+   
+    try {
+        const currentUser = await userManager.getUserProfile(userId)
+        console.log(currentUser);
+        if (!currentUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        return res.json(currentUser);
+    } catch (error) {
+        console.error('Error fetching one user:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
+
+module.exports = userRouter;

@@ -5,7 +5,7 @@
     <li><a routerLink="/books" routerLinkActive="active">All Books</a></li>
     <li><a routerLink="/contacts" routerLinkActive="active">Contact</a></li>
     <li *ngIf="(isLoggedIn$ | async) as isLoggedIn">
-      <a *ngIf="isLoggedIn" routerLink="/profile" routerLinkActive="active">Profile</a>
+      <a *ngIf="isLoggedIn" routerLink="/auth/profile" routerLinkActive="active">Profile</a>
     </li>
     <li *ngIf="!(isLoggedIn$ | async)">
       <a routerLink="/auth/login" routerLinkActive="active">Login</a>

@@ -8,12 +8,12 @@ import { environment } from '../environments/environments.development';
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = environment;
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
   getUserProfile(userId: string): Observable<User> {
-    const url = `${this.baseUrl}/profile`;
+    const url = `${this.baseUrl}/auth/${userId}/profile`;
     return this.http.get<User>(url);
   }
 }

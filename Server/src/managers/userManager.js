@@ -81,35 +81,38 @@ exports.getOneUser = (userId) => {
 };
 
 
-exports.getUserProfile = async (req, res) => {
-    try {
-      // Get the JWT token from the request headers
-      const token = req.headers.authorization;
-  
-      // Check if token exists
-      if (!token) {
-        return res.status(401).json({ error: 'Unauthorized' });
-      }
-  
-      // Extract the user ID from the token
-      const decoded = jwt.verify(token, 'your_secret_key'); // Replace 'your_secret_key' with your actual secret key
-      const userId = decoded.userId;
-  
-      // Find the user profile using the extracted user ID
-      const userProfile = await User.findOne({ userId });
-  
-      // Check if userProfile exists
-      if (!userProfile) {
-        return res.status(404).json({ error: 'User profile not found' });
-      }
-  
-      // Return the user profile
-      res.status(200).json({ userProfile });
-    } catch (error) {
-      console.error(error);
-      if (error.name === 'JsonWebTokenError') {
-        return res.status(401).json({ error: 'Invalid token' });
-      }
-      res.status(500).json({ error: 'Server Error' });
-    }
-  };
+// exports.getUserProfile = async (req, res) => {
+//     try {
+//       // Get the JWT token from the request headers
+//       const token = req.headers.authorization;
+    
+//       // Check if token exists
+//       if (!token) {
+//         return res.status(401).json({ error: 'Unauthorized' });
+//       }
+    
+//       // Replace 'your_secret_key' with your actual secret key used to sign the JWT token
+//       const decoded = jwt.verify(token, SECRET);
+      
+//       // Extract the user ID from the decoded token
+//       const userId = decoded.userId;
+    
+//       // Find the user profile using the extracted user ID
+//       const userProfile = await User.findOne({ _id: userId });
+    
+//       // Check if userProfile exists
+//       if (!userProfile) {
+//         return res.status(404).json({ error: 'User profile not found' });
+//       }
+    
+//       // Return the user profile
+//       res.status(200).json({ userProfile });
+//     } catch (error) {
+//       console.error(error);
+//       if (error.name === 'JsonWebTokenError') {
+//         return res.status(401).json({ error: 'Invalid token' });
+//       }
+//       res.status(500).json({ error: 'Server Error' });
+//     }
+//   };
+exports.getUserProfile = (userId) => User.findById(userId).populate('createdBooks').populate('likedBooks')

@@ -3,6 +3,7 @@ const bookManager = require("../managers/bookManager")
 const {isAuth, isOwner} = require('../middlewares/authMiddleware');
 const Book = require("../models/Book");
 const User = require('../models/User')
+const userManager = require("../managers/userManager")
 
 
 router.get('/books', async (req, res) => {
@@ -163,5 +164,8 @@ router.post('/:userId/liked/:bookId', isAuth, async (req, res) => {
   }
 });
   
+
+router.post('/:bookId/like', isAuth, userManager.likeBook);
+
   
 module.exports = router

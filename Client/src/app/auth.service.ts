@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { UserForAuth } from './types/user';
-import { environment } from './environments/environments.development';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -17,7 +16,9 @@ export class AuthService {
   userId$: Observable<string | null> = this.userIdSubject.asObservable();
   user$: Observable<UserForAuth | null> = this.userSubject.asObservable();
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+    this.checkAuth();
+  }
 
   setUser(user: UserForAuth): void {
     console.log(`setting user: ${user.email}`);
@@ -29,13 +30,6 @@ export class AuthService {
     console.log('getting user:', this.userSubject.getValue()?.email);
     return this.userSubject.asObservable();
   }
-
-  
-  // setIsOwner(isOwner: boolean): void {
-  //   this.isOwnerSubject.next(isOwner);
-  // }
-  
-
 
   updateAuthStatus(isLoggedIn: boolean): void {
     console.log('Updating auth status:', isLoggedIn);
@@ -76,6 +70,16 @@ export class AuthService {
     const userId = payload._id || null;
 
     return userId;
+  }
+
+  checkAuth(): void {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const userId = this.getUserIdFromToken(token);
+      if (userId) {
+        this.setUserId(userId);
+      }
+    }
   }
 
   logout(): Observable<any> {

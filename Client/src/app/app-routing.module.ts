@@ -24,7 +24,7 @@ export const routes: Routes = [
   { path: 'add', component: AddComponent, canActivate: [AuthGuardService] },
   { path: 'logout', component: LogoutComponent },
   { path: 'books/:bookId/edit', component: EditComponent },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
+  { path: 'auth/profile', component: ProfileComponent},
   { path: '**', redirectTo: '/books', pathMatch: 'full' } // Wildcard route
   ];
   
