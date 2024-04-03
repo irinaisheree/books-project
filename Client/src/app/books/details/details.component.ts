@@ -97,7 +97,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   onDelete(): void {
-    const confirmDelete = confirm("Are you sure you want to delete this painting?");
+    const confirmDelete = confirm("Are you sure you want to delete this book?");
     if (confirmDelete && this.book && this.book._id) {
       this.bookService.deleteBook(this.book._id).subscribe(
         () => {

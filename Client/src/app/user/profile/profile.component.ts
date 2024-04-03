@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth.service';
 import { UserService } from '../user.service';
 import { UserForAuth } from 'src/app/types/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +14,7 @@ export class ProfileComponent implements OnInit {
   likedBooks: any[] = [];
   createdBooks: any[] = [];
 
-  constructor(private authService: AuthService, private userService: UserService) { }
+  constructor(private authService: AuthService, private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.authService.getUser().subscribe(
@@ -37,5 +38,9 @@ export class ProfileComponent implements OnInit {
         console.error('Error fetching user profile:', error);
       }
     );
+  }
+
+  goToBookDetails(bookId: string): void {
+    this.router.navigate(['/books', bookId]);
   }
 }

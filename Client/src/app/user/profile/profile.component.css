@@ -1,0 +1,102 @@
+/* Container styles */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Profile section styles */
+  .profile-section {
+    margin-bottom: 30px;
+  }
+  
+  /* User email styles */
+  .user-email {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #666;
+  }
+  
+  /* Liked and Created Books section styles */
+  .books-section {
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  /* Book item styles */
+  .book-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .book-item .book {
+    width: calc(25% - 10px); /* Four books per row with 10px margin between them */
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .book-item .book img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
+  .book-item .book h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #007bff;
+  }
+  
+  .book-item .book p {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .details-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .details-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* No books message styles */
+  .no-books-message {
+    font-size: 18px;
+    color: #666;
+    text-align: center;
+    margin-top: 20px;
+  }
+  

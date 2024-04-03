@@ -12,6 +12,7 @@ import { LogoutComponent } from './user/logout/logout.component';
 import { EditComponent } from './books/edit/edit.component';
 import { AuthGuardService } from './authGuardService';
 import { ProfileComponent } from './user/profile/profile.component';
+import { ErrorComponent } from './error/error.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -25,7 +26,7 @@ export const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
   { path: 'books/:bookId/edit', component: EditComponent },
   { path: 'auth/profile', component: ProfileComponent},
-  { path: '**', redirectTo: '/books', pathMatch: 'full' } // Wildcard route
+  { path: '**', redirectTo: '/404', pathMatch: 'full', component: ErrorComponent } // Wildcard route
   ];
   
 

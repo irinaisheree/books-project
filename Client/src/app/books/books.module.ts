@@ -15,7 +15,8 @@ import { DetailsServiceService } from './details/details-service.service';
     BookListComponent,
     DetailsComponent,
     EditComponent,
-    AddComponent
+    AddComponent,
+
   ],
   imports: [
     CommonModule,

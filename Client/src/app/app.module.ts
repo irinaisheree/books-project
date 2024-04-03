@@ -23,6 +23,7 @@ import { LikeService } from './books/details/like.service';
 
 
 
+
 // const routes: Routes = [
 //   { path: '', redirectTo: '/', pathMatch: 'full' },
 //   { path: 'about', component: AboutComponent },
@@ -38,6 +39,7 @@ import { LikeService } from './books/details/like.service';
     AboutComponent,
     HomeComponent,
     ContactComponent,
+
   ],
   imports: [
     BrowserModule,

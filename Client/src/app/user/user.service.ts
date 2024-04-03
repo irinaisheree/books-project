@@ -16,4 +16,5 @@ export class UserService {
     const url = `${this.baseUrl}/auth/${userId}/profile`;
     return this.http.get<User>(url);
   }
+  
 }
