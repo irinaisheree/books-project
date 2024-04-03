@@ -5,10 +5,17 @@
   <div class="container">
     <h1 class="animated-text">Welcome to Our Book Lovers Club!
       <div class="clock">Time: {{ time$ | async | date: "hh:mm:ss"}}</div>
-
     </h1>
     <button onclick="window.location.href='/books'" class="btn">Explore Books</button>
   </div>
-</body>
 
+  <div class="bottom-section">
+    <h2>Discover Your Next Adventure</h2>
+    <p>Join our club to explore a world of literature! From classics to modern bestsellers, we've got something for every book lover.</p>
+    <button onclick="window.location.href='/auth/register'" class="join-btn">JOIN</button>
+  </div>
+</body>
+<footer>
+  <p>&copy; 2024 Book Lovers Club. All rights reserved.</p>
+</footer>
 </html>

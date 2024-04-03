@@ -2,69 +2,65 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-image: url('https://inharmony.com/wp-content/uploads/2019/08/Woman-reading-in-hammock-1-1200x800.jpg'); /* Replace 'background.jpg' with the path to your background image */
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-.container {
-    width: 100%;
+    background-color: #cbaded;
+  }
+  
+  .container {
     max-width: 400px;
-    margin: auto;
-    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background to improve readability */
-    border-radius: 5px;
+    margin: 50px auto;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-form {
-    width: 300px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #f1c6f7;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #8422da;
     margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="password"] {
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  input[type="email"],
+  input[type="password"] {
     width: 100%;
     padding: 10px;
+    font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-button[type="submit"] {
+  }
+  
+  .register-btn {
     display: block;
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
-    color: #fff;
+    font-size: 16px;
     border: none;
     border-radius: 5px;
+    background-color: #c55ce8;
+    color: #fff;
     cursor: pointer;
-}
-
-button[type="submit"]:hover {
-    background-color: #0056b3;
-}
-
-footer {
-    margin-top: auto;
-    background-color: pink;
+    transition: background-color 0.3s;
+  }
+  
+  .register-btn:hover {
+    background-color: #b30098;
+  }
+  
+  footer {
+    position: absolute; /* Updated position */
+    bottom: 0; /* Updated position */
+    width: 100%; /* Updated width */
+    background-color: #d0a6f6;
+    color: white;
     text-align: center;
-    padding: 10px;
-    color: purple;
-}
+    padding: 10px 0;
+  }
+  

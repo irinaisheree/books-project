@@ -1,80 +1,55 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
 body {
     font-family: Arial, sans-serif;
-    background-image: url('https://inharmony.com/wp-content/uploads/2019/08/Woman-reading-in-hammock-1-1200x800.jpg');
-    background-size: cover;
-    background-position: center;
-}
-
-header {
-    background-color: rgba(255, 192, 203, 0.5); 
-    padding: 20px;
-    text-align: center;
-}
-
-header h1 {
     margin: 0;
-    color: purple;
-}
-
-nav ul {
-    list-style-type: none;
     padding: 0;
-}
-
-nav ul li {
-    display: inline;
-    margin-right: 20px;
-}
-
-nav ul li a {
-    text-decoration: none;
-    color: purple;
-}
-
-main {
-    padding: 20px;
-    min-height: calc(100vh - 130px); 
-    background-color: rgba(255, 255, 255, 0.7); 
-}
-
-section {
-    margin-bottom: 30px;
-}
-
-h2 {
-    color: purple;
-}
-
-.team-member {
+    background:image('https://www.neillsvillepubliclibrary.org/wp-content/uploads/2020/01/Books-Background.jpg');
+  }
+  
+  header {
+    background-color: #e1e3ff;
+    color: rgb(236, 75, 118);
+    text-align: center;
+    padding: 20px 0;
+  }
+  
+  h1 {
+    font-size: 36px;
+  }
+  
+  main {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Transparent white background */
+    border-radius: 10px; /* Optional: Add border radius for styling */
+  }
+  
+  section {
+    margin-bottom: 40px;
+  }
+  
+  h2 {
+    color: #ff007b;
+    font-size: 28px;
+  }
+  
+  p {
+    font-size: 18px;
+    line-height: 1.6;
+  }
+  
+  .btn {
     display: inline-block;
-    margin-right: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+  }
+  footer {
+    position: absolute; /* Updated position */
+    bottom: 0; /* Updated position */
+    width: 100%; /* Updated width */
+    background-color: #d0a6f6;
+    color: white;
     text-align: center;
-}
-
-.team-member h3 {
-    margin: 5px 0;
-    color: purple;
-}
-
-.team-member p {
-    margin: 5px 0;
-    color: mint;
-}
-
-footer {
-    background-color: rgba(255, 192, 203, 0.5); 
-    text-align: center;
-    padding: 10px;
-    width: 100%;
-}
-
-footer p {
-    margin: 0;
-    color: purple;
-}
+    padding: 10px 0;
+  }
+  

@@ -26,7 +26,7 @@ export const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
   { path: 'books/:bookId/edit', component: EditComponent },
   { path: 'auth/profile', component: ProfileComponent},
-  { path: '**', redirectTo: '/404', pathMatch: 'full', component: ErrorComponent } // Wildcard route
+  { path: '**', component: ErrorComponent } // Wildcard route
   ];
   
 

@@ -1,6 +1,15 @@
-/* body {
-    font-family: Arial, sans-serif;
-    background-color: rgb(168, 76, 172);
+html, body {
+    height: 100vh;
     margin: 0;
     padding: 0;
-} */
+    overflow-x: hidden; /* Optional: Hide horizontal scrollbar */
+  }
+  
+  :host {
+    display: block;
+    background: url('https://wallpapers.com/images/hd/book-background-1uu89e2eikq8h8ip.jpg');/* or background image */
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
+

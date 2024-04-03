@@ -1,45 +1,32 @@
 <div *ngIf="user" class="container">
   <h1>Profile</h1>
-  <div>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    
-    <h2>Liked Books:</h2>
-    <div class="book-item" *ngIf="likedBooks.length > 0; else noLikedBooks">
-      <ul>
-        <li *ngFor="let book of likedBooks">
-          <div class="book">
-            <img [src]="book.imageUrl" [alt]="book.title">
-            <h3>{{ book.title }}</h3>
-            <p><strong>Author:</strong> {{ book.author }}</p>
-            <button class="details-btn" (click)="goToBookDetails(book._id)">Details</button>
-          </div>
+  <div class="main-container">
+    <div class="sub-container added-books">
+      <h2>Added Books:</h2>
+      <ul class="book-list">
+        <li *ngFor="let book of createdBooks" class="book">
+          <img [src]="book.imageUrl" [alt]="book.title">
+          <h3>{{ book.title }}</h3>
+          <p><strong>Author:</strong> {{ book.author }}</p>
+          <button class="details-btn" (click)="goToBookDetails(book._id)">Details</button>
         </li>
       </ul>
     </div>
-    <ng-template #noLikedBooks>
-      <p class="no-books-message">No Liked Books</p>
-    </ng-template>
-    
-    <h2>Added Books:</h2>
-    <div class="book-item" *ngIf="createdBooks.length > 0; else noAddedBooks">
-      <ul>
-        <li *ngFor="let book of createdBooks">
-          <div class="book">
-            <img [src]="book.imageUrl" [alt]="book.title">
-            <h3>{{ book.title }}</h3>
-            <p><strong>Author:</strong> {{ book.author }}</p>
-            <button class="details-btn" (click)="goToBookDetails(book._id)">Details</button>
-          </div>
+  
+    <div class="sub-container liked-books">
+      <h2>Liked Books:</h2>
+      <ul class="book-list">
+        <li *ngFor="let book of likedBooks" class="book">
+          <img [src]="book.imageUrl" [alt]="book.title">
+          <h3>{{ book.title }}</h3>
+          <p><strong>Author:</strong> {{ book.author }}</p>
+          <button class="details-btn" (click)="goToBookDetails(book._id)">Details</button>
         </li>
       </ul>
     </div>
-    <ng-template #noAddedBooks>
-      <p class="no-books-message">No Added Books</p>
-    </ng-template>
   </div>
-</div>
-
-<div *ngIf="!user" class="container">
-  <p>Loading user profile...</p>
-</div>
-
+  
+  <div *ngIf="!user" class="container">
+    <p>Loading user profile...</p>
+  </div>
+  
