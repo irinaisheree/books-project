@@ -2,77 +2,87 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-  }
-  
-  header {
-    background-color: #b88ea6; /* Purple */
-    color: #fff;
-    text-align: center;
-    padding: 20px 0;
-  }
-  
-  h1 {
-    margin: 0;
-    font-size: 28px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
   }
   
   main {
-    padding: 20px;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   .book-details {
+    background-color: #ffb3f6;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
     text-align: center;
-    margin-bottom: 30px;
+    max-width: 90%;
+    width: 700px; /* Set your desired width */
+    margin-top: 50px; /* Adjust this value as needed */
   }
   
   .book-image {
-    max-width: 300px; /* Adjust the maximum width as needed */
-    height: auto; /* Maintain aspect ratio */
-    margin: 0 auto 20px; /* Center and add bottom margin */
+    width: 100%;
+    max-height: 300px; /* Set your desired height */
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
   }
   
   .book-title {
-    margin-top: 0;
     font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
   }
   
-  .author, .description, .price {
-    margin: 5px 0;
+  .author {
     font-size: 18px;
+    color: #777;
+    margin-bottom: 10px;
   }
   
   .price {
-    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 10px;
   }
   
   .btn {
-    background-color: #f197bd; /* Pink */
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #9539e6;
     color: #fff;
     border: none;
-    padding: 8px 16px;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s;
+    margin-right: 10px;
   }
   
   .btn:hover {
-    background-color: #e64a87; /* Lighter Pink on hover */
+    background-color: #0056b3;
   }
-  
-  .unauthorized-message {
-    color: red;
-    font-style: italic;
-  }
-  
   footer {
-    background-color: #f8edeb; /* Mint */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #d0a6f6;
+    color: white;
     text-align: center;
     padding: 10px 0;
-  }
-  
-  footer p {
-    margin: 0;
-    color: #4a4a4a;
   }
   

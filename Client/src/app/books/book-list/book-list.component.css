@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: image('https://wallpapers.com/images/hd/book-background-1uu89e2eikq8h8ip.jpg');
+    background: url('https://wallpapers.com/images/hd/book-background-1uu89e2eikq8h8ip.jpg');
   }
   
   header {
@@ -17,7 +17,7 @@ body {
   }
   
   main {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 20px auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -27,8 +27,9 @@ body {
   
   .book-container {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    height: 300px; /* Set a fixed height */
   }
   
   .book {
@@ -37,10 +38,13 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 20px;
     text-align: center;
+    width: 100%;
   }
   
   .book img {
     max-width: 100%;
+    height: 200px; /* Set a fixed height for all images */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
@@ -67,6 +71,9 @@ body {
   }
   
   footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
     background-color: #d0a6f6;
     color: white;
     text-align: center;
