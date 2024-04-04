@@ -6,12 +6,6 @@
     <p class="price">Price: ${{book?.price}}</p>
     <p class="description">{{book?.description}}</p>
     
-    <!-- Edit button -->
-    <a *ngIf="(isOwner$ | async)" [routerLink]="['/books', book?._id, 'edit']" class="btn">Edit</a>
-    
-    <!-- Delete button -->
-    <button *ngIf="(isOwner$ | async) && (isLoggedIn$ | async)" (click)="onDelete()" class="btn">Delete</button>
-    
     <!-- Like button -->
     <button *ngIf="!(isOwner$ | async) && (isLoggedIn$ | async)" (click)="onLike()" class="btn" [disabled]="(bookIsLiked$ | async)">
       <ng-container *ngIf="!(bookIsLiked$ | async); else likedText">LIKE</ng-container>

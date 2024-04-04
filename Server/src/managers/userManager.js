@@ -50,69 +50,34 @@ exports.getOneUser = (userId) => {
       })
       .exec();
   };
-  exports.likeBook = async (req, res) => {
-    const { bookId } = req.params;
-
+  exports.likeBook = async (userId, bookId) => {
     try {
-        const book = await Book.findById(bookId);
-        if (!book) {
-            return res.status(404).json({ error: 'Book not found' });
-        }
-
-        const user = await User.findById(req.user._id);
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-
-        // Check if the book is already liked
-        if (user.likedBooks.includes(bookId)) {
-            return res.status(400).json({ error: 'Book already liked' });
-        }
-
-        // Add the book to the likedBooks array
-        user.likedBooks.push(bookId);
-        await user.save();
-
-        return res.status(200).json({ message: 'Book liked successfully' });
+      const user = await User.findById(userId);
+      if (!user) {
+        console.error('User not found');
+        return { error: 'User not found', status: 404 };
+      }
+  
+      console.log('Current likedBooks:', user.likedBooks);
+  
+      // Check if the book is already liked
+      if (user.likedBooks.includes(bookId)) {
+        console.error('Book already liked');
+        return { error: 'Book already liked', status: 400 };
+      }
+  
+      // Add the book to the likedBooks array
+      user.likedBooks.push(bookId);
+      await user.save();
+  
+      console.log('Updated likedBooks:', user.likedBooks);
+  
+      return { message: 'Book liked successfully', user };
     } catch (error) {
-        console.error('Error liking book:', error);
-        return res.status(500).json({ error: 'Internal server error' });
+      console.error('Error liking book:', error);
+      return { error: 'Internal server error', status: 500 };
     }
-};
+  };
 
 
-// exports.getUserProfile = async (req, res) => {
-//     try {
-//       // Get the JWT token from the request headers
-//       const token = req.headers.authorization;
-    
-//       // Check if token exists
-//       if (!token) {
-//         return res.status(401).json({ error: 'Unauthorized' });
-//       }
-    
-//       // Replace 'your_secret_key' with your actual secret key used to sign the JWT token
-//       const decoded = jwt.verify(token, SECRET);
-      
-//       // Extract the user ID from the decoded token
-//       const userId = decoded.userId;
-    
-//       // Find the user profile using the extracted user ID
-//       const userProfile = await User.findOne({ _id: userId });
-    
-//       // Check if userProfile exists
-//       if (!userProfile) {
-//         return res.status(404).json({ error: 'User profile not found' });
-//       }
-    
-//       // Return the user profile
-//       res.status(200).json({ userProfile });
-//     } catch (error) {
-//       console.error(error);
-//       if (error.name === 'JsonWebTokenError') {
-//         return res.status(401).json({ error: 'Invalid token' });
-//       }
-//       res.status(500).json({ error: 'Server Error' });
-//     }
-//   };
 exports.getUserProfile = (userId) => User.findById(userId).populate('createdBooks').populate('likedBooks')

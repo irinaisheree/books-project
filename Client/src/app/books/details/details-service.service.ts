@@ -13,7 +13,6 @@ export class DetailsServiceService implements OnDestroy{
 
   constructor(private http: HttpClient) { }
 
-
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
@@ -23,7 +22,6 @@ export class DetailsServiceService implements OnDestroy{
     const {apiUrl} = environment
     return this.http.get<Book[]>(`${apiUrl}/books`)
   }
-
 
   getOneBook(id: string): Observable<Book> {
     const {apiUrl} = environment
@@ -39,4 +37,26 @@ export class DetailsServiceService implements OnDestroy{
         takeUntil(this.unsubscribe$)
       );
   }
+
+  likeBook(id:string): Observable<Book>{ 
+    const {apiUrl} = environment
+    return this.http.post<Book>(`${apiUrl}/books/${id}/like`, {}).pipe(
+      takeUntil(this.unsubscribe$)
+    )
+  }
+
+  unlikeBook(id:string): Observable<Book>{ 
+    const {apiUrl} = environment
+    return this.http.post<Book>(`${apiUrl}/books/${id}/unlike`, {}).pipe(
+      takeUntil(this.unsubscribe$)
+    )
+  }
+
+  isBookLikedByUser(id: string): Observable<boolean> {
+    const { apiUrl } = environment;
+    return this.http.get<boolean>(`${apiUrl}/books/${id}/liked`).pipe(
+      takeUntil(this.unsubscribe$)
+    );
+  }
 }
+

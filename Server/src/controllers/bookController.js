@@ -9,7 +9,7 @@ const userManager = require("../managers/userManager")
 router.get('/books', async (req, res) => {
     try {
         const allBooks = await bookManager.getAll();
-        console.log(allBooks)
+       
         res.json(allBooks);
     } catch (error) {
         console.error('Error fetching books:', error);
@@ -25,10 +25,10 @@ router.get('/add', (req, res) => {
 
 router.get('/books/:bookId', async (req, res) => {
     const bookId = req.params.bookId;
-    console.log('Requested book ID:', bookId);
+
     try {
         const oneBook = await bookManager.getOne(bookId); 
-        console.log(oneBook);
+    
         if (!oneBook) {
             return res.status(404).json({ message: 'Book not found' });
         }
@@ -41,7 +41,7 @@ router.get('/books/:bookId', async (req, res) => {
 
 
 router.post('/add', isAuth, async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     const bookData = req.body;
 
     try {
@@ -104,8 +104,6 @@ router.get('/books/:bookId/edit', isAuth, async (req, res) => {
       return res.status(500).json({ error: 'Server error' });
     }
   });
- 
-
   router.post('/books/:bookId/like', isAuth, async (req, res) => {
     const { bookId } = req.params;
     
@@ -139,10 +137,36 @@ router.get('/books/:bookId/edit', isAuth, async (req, res) => {
     }
 });
 
-router.post('/:userId/liked/:bookId', isAuth, async (req, res) => {
+// router.post('/users/:userId/liked', isAuth, async (req, res) => {
+//   try {
+//     const userId = req.params.userId;
+//     const bookId = req.params.bookId;
+
+//     const user = await User.findById(userId);
+
+//     if (!user) {
+//       return res.status(404).json({ message: 'User not found' });
+//     }
+
+//     // Assuming 'likedBooks' is an array field in your User model
+//     if (!user.likedBooks.includes(bookId)) {
+//       user.likedBooks.push(bookId);
+//       await user.save();
+//       res.status(200).json({ message: 'Book liked successfully' });
+//     } else {
+//       res.status(400).json({ message: 'Book already liked by the user' });
+//     }
+//   } catch (error) {
+//     console.error('Error liking book:', error);
+//     res.status(500).json({ message: 'Server error' });
+//   }
+// });
+  
+
+router.post('/users/:userId/liked', isAuth, async (req, res) => {
   try {
     const userId = req.params.userId;
-    const bookId = req.params.bookId;
+    const bookId = req.body.bookId;
 
     const user = await User.findById(userId);
 
@@ -163,9 +187,47 @@ router.post('/:userId/liked/:bookId', isAuth, async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+router.get('/users/:userId/liked/:bookId', isAuth, async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const bookId = req.params.bookId;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Assuming 'likedBooks' is an array field in your User model
+    const isBookLiked = user.likedBooks.includes(bookId);
+    res.status(200).json({ isBookLiked });
+  } catch (error) {
+    console.error('Error checking if book is liked:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+router.get('/users/:userId/liked', isAuth, async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Assuming 'likedBooks' is an array field in your User model
+    const likedBooks = user.likedBooks;
+    res.status(200).json(likedBooks);
+  } catch (error) {
+    console.error('Error fetching liked books:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
   
 
-router.post('/:bookId/like', isAuth, userManager.likeBook);
 
-  
 module.exports = router

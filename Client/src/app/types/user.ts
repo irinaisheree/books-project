@@ -6,8 +6,8 @@ export interface User{
     email: string;
     password: string;
     token: string;
-    books?: Book[]
-    liked?: Book[]
+    createdBooks?: Book[]
+    likedBooks?: Book[]
 
 }
 
@@ -17,6 +17,6 @@ export interface UserForAuth extends User {
     email: string;
     password: string;
     token: string;
-    books?: Book[]
-    liked?: Book[]
+    createdBooks?: Book[]
+    likedBooks?: Book[]
   }
