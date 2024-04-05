@@ -18,7 +18,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   isOwner$: Observable<boolean> | undefined;
   private destroy$ = new Subject<void>();
   bookIsLiked$: Observable<boolean> = of(false);
-  userId: string | undefined; // Current user's ID
+  userId: string = ''; // Current user's ID
 
   constructor(
     private route: ActivatedRoute,
@@ -29,7 +29,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
   ) {
     this.isLoggedIn$ = this.authService.isLoggedIn$;
     this.isOwner$ = undefined;
+  }
 
+  ngOnInit(): void {
     this.authService.getUser().pipe(
       takeUntil(this.destroy$)
     ).subscribe(user => {
@@ -37,9 +39,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
         this.userId = user._id;
       }
     });
-  }
-  
-  ngOnInit(): void {
+
     this.route.paramMap.pipe(
       switchMap(params => {
         const bookIdParam = params.get('bookId');
@@ -54,16 +54,14 @@ export class DetailsComponent implements OnInit, OnDestroy {
         this.isOwner$ = this.isOwnerCheck();
 
         // Fetch initial liked state of the book for the current user
-        if (this.userId && this.book?._id) {
-          return this.likeService.isBookLikedByUser(this.userId, this.book._id);
-        } else {
-          return of(false);
-        }
+        this.bookIsLiked$ = this.likeService.isBookLikedByUser(this.userId, this.book?._id || '');
+
+        return this.bookIsLiked$;
       }),
       takeUntil(this.destroy$)
     ).subscribe(
       (isLiked: boolean) => {
-        this.bookIsLiked$ = of(isLiked);
+        // This subscription is optional depending on your use case
       },
       error => {
         console.error('Error fetching book:', error);
@@ -99,7 +97,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   onDelete(): void {
-    const confirmDelete = confirm("Are you sure you want to delete this book?");
+    const confirmDelete = confirm("Are you sure you want to delete this painting?");
     if (confirmDelete && this.book && this.book._id) {
       this.bookService.deleteBook(this.book._id).subscribe(
         () => {
@@ -117,13 +115,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   onLike(): void {
     if (this.book && this.book._id && this.userId) {
-      this.likeService.toggleLike(this.userId, this.book._id).subscribe(() => {
-        if (this.book && this.userId) {
-          this.likeService.isBookLikedByUser(this.userId, this.book._id).subscribe(isLiked => {
-            this.bookIsLiked$ = of(isLiked);
-          });
-        }
-      });
+      this.likeService.toggleLike(this.userId, this.book._id);
+      this.bookIsLiked$ = this.likeService.isBookLikedByUser(this.userId, this.book?._id || '');
     }
   }
 }

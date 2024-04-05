@@ -35,7 +35,6 @@ import { LikeService } from './books/details/like.service';
   declarations: [
     AppComponent,
     NavigationComponent,
-    // BookListComponent,
     AboutComponent,
     HomeComponent,
     ContactComponent,

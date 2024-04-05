@@ -1,11 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, EmailValidator } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { RegisterService } from './register.service';
-import { EMAIL_DOMAINS } from 'src/app/constants';
-import { HttpClient } from '@angular/common/http';
-import { User } from 'src/app/types/user';
-import { environment } from 'src/app/environments/environment';
+
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,15 +12,15 @@ import { Router } from '@angular/router';
 })
 
 export class RegisterComponent implements OnInit {
-  registerForm!: FormGroup; // Initialize registerForm
+  registerForm!: FormGroup; 
 
   constructor(private formBuilder: FormBuilder, private registerService: RegisterService, private router: Router) { }
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
-      email: ['', [Validators.required]],
-      password: ['', [Validators.required]],
-      repeatPassword: ['', Validators.required]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      repeatPassword: ['', [Validators.required]]
     });
   }
 

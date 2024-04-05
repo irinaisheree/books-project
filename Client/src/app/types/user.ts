@@ -7,7 +7,7 @@ export interface User{
     password: string;
     token: string;
     createdBooks?: Book[]
-    likedBooks?: Book[]
+    likedBooks?: string[]
 
 }
 
@@ -18,5 +18,5 @@ export interface UserForAuth extends User {
     password: string;
     token: string;
     createdBooks?: Book[]
-    likedBooks?: Book[]
+    likedBooks?: string[]
   }

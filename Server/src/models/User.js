@@ -11,11 +11,11 @@ const userSchema = new mongoose.Schema({
     },
     createdBooks: [{
         type: mongoose.Types.ObjectId,
-        ref: Book,
+        ref: "Book",
     }],
     likedBooks: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: Book,
+        ref: "Book",
     }],
 });
 

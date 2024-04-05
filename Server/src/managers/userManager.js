@@ -50,34 +50,35 @@ exports.getOneUser = (userId) => {
       })
       .exec();
   };
-  exports.likeBook = async (userId, bookId) => {
+  exports.likeBook = async (req, res) => {
+    const { bookId } = req.params;
+
     try {
-      const user = await User.findById(userId);
-      if (!user) {
-        console.error('User not found');
-        return { error: 'User not found', status: 404 };
-      }
-  
-      console.log('Current likedBooks:', user.likedBooks);
-  
-      // Check if the book is already liked
-      if (user.likedBooks.includes(bookId)) {
-        console.error('Book already liked');
-        return { error: 'Book already liked', status: 400 };
-      }
-  
-      // Add the book to the likedBooks array
-      user.likedBooks.push(bookId);
-      await user.save();
-  
-      console.log('Updated likedBooks:', user.likedBooks);
-  
-      return { message: 'Book liked successfully', user };
+        const book = await Book.findById(bookId);
+        if (!book) {
+            return res.status(404).json({ error: 'Book not found' });
+        }
+
+        const user = await User.findById(req.user._id);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Check if the book is already liked
+        if (user.likedBooks.includes(bookId)) {
+            return res.status(400).json({ error: 'Book already liked' });
+        }
+
+        // Add the book to the likedBooks array
+        user.likedBooks.push(bookId);
+        await user.save();
+
+        return res.status(200).json({ message: 'Book liked successfully' });
     } catch (error) {
-      console.error('Error liking book:', error);
-      return { error: 'Internal server error', status: 500 };
+        console.error('Error liking book:', error);
+        return res.status(500).json({ error: 'Internal server error' });
     }
-  };
+};
 
 
 exports.getUserProfile = (userId) => User.findById(userId).populate('createdBooks').populate('likedBooks')

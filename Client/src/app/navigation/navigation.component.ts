@@ -21,12 +21,10 @@ export class NavigationComponent implements OnInit {
     this.authService.logout().subscribe(
       () => {
         console.log('Logout successful');
-        // Redirect to home page or any other desired page after logout
         this.router.navigate(['/']);
       },
       (error: any) => {
         console.error('Error logging out:', error);
-        // Handle error if needed
       }
     );
   }

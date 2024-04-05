@@ -8,6 +8,4 @@ export interface Book {
    imageUrl: string;
    description: string;
    creator: User;
-   likes: number;
-   liked: boolean
  }

@@ -27,9 +27,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.showLoginMessage = false;
-    }, 5000);
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -50,30 +47,29 @@ export class LoginComponent implements OnInit {
         (response) => {
           const token = response?.token;
           localStorage.setItem("token", token)
+
           // Set user email in AuthService
           this.authService.setUserEmail(this.loginForm.value.email);
   
           // Extract user ID from token and set it in AuthService
           const userId = this.authService.getUserIdFromToken(token);
           console.log(userId)
-          if (userId) { // Check if userId is not null
-            // Set the user object in AuthService
+          if (userId) { 
             const user: UserForAuth = {
               _id: userId,
               email: this.loginForm.value.email,
-              password: '', // You might not need to set this
-              token: token || '' // Ensure token is not null
+              password: '', 
+              token: token || '' 
             };
             this.authService.setUser(user);
             console.log('set user: ', user)
             // Update authentication status
             this.authService.updateAuthStatus(true);
   
-            // Redirect after successful login
             this.router.navigate(['']);
           } else {
             console.error('Error: Unable to extract user ID from token');
-            this.errorMessage = 'Invalid credentials'; // Set errorMessage for invalid credentials
+            this.errorMessage = 'Invalid userData';
           }
         },
         (error) => {

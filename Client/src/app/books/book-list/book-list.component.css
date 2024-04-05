@@ -80,3 +80,15 @@ body {
     padding: 10px 0;
   }
   
+  /* Styles for the "No books added yet" message */
+  .no-books {
+    font-style: italic;
+    color: #ff0080; /* Changed color to red for emphasis */
+    font-size: 36px;
+    font-weight: bold; /* Added bold font weight */
+    text-align: center; /* Centered text */
+    background-color: rgba(241, 116, 252, 0.467);
+    border-radius: 20px;
+    position: relative;
+  }
+  

@@ -4,16 +4,22 @@
     <header>
         <h1>Explore All Books</h1>
     </header>
+
     <main>
-        <div *ngFor="let book of books" class="book-container">
-            <div class="book">
-                <img src="{{book.imageUrl}}" alt="Book 1">
-                <h2 class="book-title">{{book.title}}</h2>
-                <a [routerLink]="['/books', book._id]">
-                    <button class="details-btn">Details</button>
-                </a>
-            </div>
+        <div *ngIf="books.length === 0; else bookList" class="no-books">
+            No books added yet.
         </div>
+        <ng-template #bookList>
+            <div *ngFor="let book of books" class="book-container">
+                <div class="book">
+                    <img src="{{book.imageUrl}}" alt="Book 1">
+                    <h2 class="book-title">{{book.title}}</h2>
+                    <a [routerLink]="['/books', book._id]">
+                        <button class="details-btn">Details</button>
+                    </a>
+                </div>
+            </div>
+        </ng-template>
     </main>
     <footer>
         <p>&copy; 2024 Book Lovers Club. All rights reserved.</p>

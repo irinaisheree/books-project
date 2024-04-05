@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from 'src/app/environments/environment';
 import { User } from 'src/app/types/user';
 import { AuthService } from '../../auth.service';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class RegisterService {
     return this.http.post<User>(`${apiUrl}/auth/register`, userData).pipe(
       catchError(error => {
         console.error('HTTP POST request error:', error);
-        return of(error); // Emit the error and complete
+        return of(error); 
       })
     );
   }
